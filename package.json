@@ -7,7 +7,7 @@
     "dev": "bun run script:create-images-type && vite dev --mode dev",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "bunx run tsc --noEmit && vitest run",
+    "test": "bunx tsc --noEmit && vitest run",
     "format": "biome format --write",
     "lint": "biome lint",
     "check": "biome check",

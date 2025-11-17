@@ -11,7 +11,7 @@ export function PageNotFound() {
 				A página que você está procurando não existe ou pode ter sido movida para outro universo.
 			</p>
 			<Button variant="outline" asChild size="lg">
-				<Link to="/">
+				<Link to="/" search={{ q: "food" }}>
 					<HomeIcon size={18} />
 					Voltar para a Home
 				</Link>
