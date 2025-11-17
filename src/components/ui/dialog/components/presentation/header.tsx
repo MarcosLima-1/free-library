@@ -13,7 +13,7 @@ export function Header({ className, children, hideCloseButton, ...props }: Heade
 	return (
 		<div className={cn("mb-4 grid grid-cols-[1fr_auto] text-center sm:text-left", className)} {...props}>
 			<div className="flex flex-col space-y-1.5">{children}</div>
-			{!hideCloseButton && <Dialog.close />}
+			{!hideCloseButton && <Dialog.Close />}
 		</div>
 	);
 }

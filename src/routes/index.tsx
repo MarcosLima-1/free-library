@@ -1,36 +1,71 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { HomeIcon } from "lucide-react";
-import { Image } from "@/components/misc/image";
-import { RoundedIcon } from "@/components/misc/rounded-icon";
-import { ShadowBlur } from "@/components/misc/shadow-blur";
+import { BookOpen, Library } from "lucide-react";
+import { z } from "zod/v4";
+import { searchBooksOptions } from "@/modules/app/books/api/search-books";
+import { BookGrid } from "@/modules/app/books/components/book-grid";
+import { SearchBar } from "@/modules/app/books/components/search-bar";
+
+const searchParamsSchema = z.object({
+	q: z.string().catch("food"),
+});
 
 export const Route = createFileRoute("/")({
 	component: RouteComponent,
+	validateSearch: searchParamsSchema,
+	loader: ({ context: { queryClient } }) => {
+		queryClient.prefetchQuery(searchBooksOptions({ query: "test" }));
+	},
 });
 
 function RouteComponent() {
+	const { q } = Route.useSearch();
+	const { data, isPending } = useSuspenseQuery(searchBooksOptions({ query: q }));
+	const books = data ?? [];
 	return (
-		<div className="flex h-svh w-full items-center justify-center bg-background">
-			<div className="relative flex size-11/12 flex-col items-center justify-center rounded-2xl border border-primary/20 bg-card p-8 shadow-2xl shadow-purple-500/10 md:size-4/5">
-				<ShadowBlur blur={500} spread={100} className="opacity-40" />
-				<RoundedIcon className="mb-6 bg-linear-to-br from-purple-600 to-blue-500 p-4">
-					<HomeIcon size={80} />
-				</RoundedIcon>
-				<h1 className="bg-linear-to-b from-white to-primary bg-clip-text text-center font-bold text-5xl text-transparent md:text-6xl">
-					React Template
-				</h1>
-				<p className="mt-4 text-center text-gray-400 text-lg">Seu ponto de partida para aplicações modernas.</p>
-			</div>
+		<div className="min-h-screen w-full bg-background">
+			<header className="sticky top-0 z-50 border-border border-b bg-card">
+				<div className="container mx-auto px-4 py-4">
+					<div className="mb-4 flex items-center justify-between">
+						<div className="flex items-center gap-3">
+							<div className="rounded-lg bg-primary p-2">
+								<Library className="h-6 w-6 text-primary-foreground" />
+							</div>
+							<div>
+								<h1 className="font-bold text-2xl text-foreground">Biblioteca Livre</h1>
+								<p className="text-muted-foreground text-sm">Milhares de livros gratuitos</p>
+							</div>
+						</div>
+						<div className="hidden items-center gap-2 text-muted-foreground text-sm md:flex">
+							<BookOpen className="h-4 w-4" />
+							<span>{books.length} livros encontrados</span>
+						</div>
+					</div>
 
-			<a
-				target="_blank"
-				rel="noopener noreferrer"
-				aria-label="author"
-				href="https://github.com/MarcosLima-1"
-				className="fixed bottom-4 left-4 flex items-center gap-2 rounded-full border bg-background p-2"
-			>
-				<Image alt="author" height={30} width={30} src="/tk.webp" className="rounded-full" /> <p>by @markin</p>
-			</a>
+					<SearchBar loading={isPending} searchQuery={q} />
+				</div>
+			</header>
+
+			<main className="container mx-auto px-4 py-8">
+				{isPending && (
+					<div className="flex min-h-[400px] items-center justify-center">
+						<div className="text-center">
+							<div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+							<p className="text-muted-foreground">Buscando livros...</p>
+						</div>
+					</div>
+				)}
+				{!isPending && books.length > 0 && <BookGrid books={books} />}
+				{!isPending && books.length === 0 && (
+					<div className="flex min-h-[400px] flex-col items-center justify-center text-center">
+						<BookOpen className="mb-4 h-16 w-16 text-muted-foreground" />
+						<h2 className="mb-2 font-semibold text-2xl text-foreground">Nenhum livro encontrado</h2>
+						<p className="max-w-md text-muted-foreground">
+							Tente buscar por título, autor ou categoria. Use termos em português ou inglês.
+						</p>
+					</div>
+				)}
+			</main>
 		</div>
 	);
 }

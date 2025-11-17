@@ -12,18 +12,18 @@ import { BasicDialog } from "@/components/ui/dialog/components/preset/basic";
 import { ConfimationDialog } from "@/components/ui/dialog/components/preset/confimation-dialog";
 
 export const Dialog = {
-	provider: Provider,
-	portal: Portal,
-	overlay: DialogOverlay,
-	content: DialogContent,
-	trigger: DialogTrigger,
-	close: DialogCloseButton,
-	title: Title,
-	description: Description,
-	header: Header,
-	footer: Footer,
-	presets: {
-		basic: BasicDialog,
-		confirm: ConfimationDialog,
+	Provider: Provider,
+	Portal: Portal,
+	Overlay: DialogOverlay,
+	Content: DialogContent,
+	Trigger: DialogTrigger,
+	Close: DialogCloseButton,
+	Title: Title,
+	Tescription: Description,
+	Header: Header,
+	Footer: Footer,
+	Presets: {
+		Basic: BasicDialog,
+		Confirm: ConfimationDialog,
 	},
 };

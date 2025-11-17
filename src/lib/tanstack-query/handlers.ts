@@ -1,12 +1,10 @@
 import type { Mutation, Query } from "@tanstack/react-query";
 import { queryClient } from "@/lib/tanstack-query/client";
-import { getSession } from "@/modules/auth/utils/auth";
 import { handleToastError, handleToastSuccess } from "./utils";
 
 export const globalErrorHandler = (error: Error, item: Query | Mutation) => {
 	const meta = item.meta;
-	const session = getSession();
-	const userName = session?.user?.name ?? "Usuário não identificado";
+	const userName = "Usuário não identificado";
 
 	handleToastError(error, meta);
 

@@ -6,7 +6,7 @@ import "./global.css";
 import "@/lib/env";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { FormDevtools } from "@tanstack/react-form-devtools";
+import { FormDevtoolsPanel } from "@tanstack/react-form-devtools";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { isAxiosError } from "axios";
@@ -18,7 +18,6 @@ import { SplashScreen } from "@/components/splash-screen";
 import { UnavailableContent } from "@/components/unavailable-content";
 import { env } from "@/lib/env";
 import { queryClient } from "@/lib/tanstack-query/client";
-import { setupAuthRequestInterceptor, setupAuthResponseInterceptor } from "@/modules/auth/middlewares/auth-interceptors";
 import { routeTree } from "@/types/routeTree.generated";
 import { ThemeProvider } from "./modules/theme/context/theme-provider";
 
@@ -80,7 +79,7 @@ createRoot(rootContainer).render(
 						},
 						{
 							name: "TanStack Form",
-							render: <FormDevtools />,
+							render: <FormDevtoolsPanel />,
 						},
 					]}
 				/>
@@ -88,9 +87,6 @@ createRoot(rootContainer).render(
 		</QueryClientProvider>
 	</StrictMode>,
 );
-
-setupAuthRequestInterceptor();
-setupAuthResponseInterceptor();
 
 if (env.VITE_DEV_MODE) {
 	scan({

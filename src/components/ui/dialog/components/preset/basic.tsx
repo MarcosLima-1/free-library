@@ -18,9 +18,9 @@ export function BasicDialog({ children, classNamePortal, containerElement, onInt
 	}, [onInteractOutside]);
 
 	return (
-		<Dialog.portal className={classNamePortal} containerElement={containerElement}>
-			<Dialog.overlay onInteractOverlay={handleOnInteractOutside} />
-			<Dialog.content {...props}>{children}</Dialog.content>
-		</Dialog.portal>
+		<Dialog.Portal className={classNamePortal} containerElement={containerElement}>
+			<Dialog.Overlay onInteractOverlay={handleOnInteractOutside} />
+			<Dialog.Content {...props}>{children}</Dialog.Content>
+		</Dialog.Portal>
 	);
 }

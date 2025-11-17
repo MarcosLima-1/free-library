@@ -32,23 +32,23 @@ export function ConfimationDialog({
 		onClickConfirm?.();
 	}
 	return (
-		<Dialog.presets.basic className={cn("h-[200px] max-w-xl", className)}>
-			<Dialog.header>
-				<Dialog.title>{title}</Dialog.title>
-				{description && <Dialog.description>{description}</Dialog.description>}
-			</Dialog.header>
-			<Dialog.footer>
-				<Dialog.trigger asChild>
+		<Dialog.Presets.Basic className={cn("h-[200px] max-w-xl", className)}>
+			<Dialog.Header>
+				<Dialog.Title>{title}</Dialog.Title>
+				{description && <Dialog.Tescription>{description}</Dialog.Tescription>}
+			</Dialog.Header>
+			<Dialog.Footer>
+				<Dialog.Trigger asChild>
 					<Button onClick={handleCancelClick} variant="outline">
 						Cancelar
 					</Button>
-				</Dialog.trigger>
-				<Dialog.trigger asChild>
+				</Dialog.Trigger>
+				<Dialog.Trigger asChild>
 					<Button variant={confirmButtonVariant} onClick={handleConfirmClick}>
 						{confirmButtonLabel}
 					</Button>
-				</Dialog.trigger>
-			</Dialog.footer>
-		</Dialog.presets.basic>
+				</Dialog.Trigger>
+			</Dialog.Footer>
+		</Dialog.Presets.Basic>
 	);
 }
